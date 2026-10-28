@@ -37,17 +37,41 @@ struct QuickselectResult {
 };
 
 class Solution {
+private:
+    // TODO: Implement the private helper method 'manualSwap':
+    //  - Signature: void manualSwap(ll& a, ll& b)
+    //  - Perform a direct swap of values using pass-by-reference and a temporary variable.
+
+    // TODO: Implement the private helper method 'effectiveSwap':
+    //  - Signature: void effectiveSwap(vector<ll>& nums, ll i, ll j, ll& swapCount)
+    //  - Condition: Execute manualSwap(nums[i], nums[j]) and increment swapCount ONLY if i != j.
+
+    // TODO: Implement the private helper method 'partitionLomuto':
+    //  - Signature: ll partitionLomuto(vector<ll>& nums, ll left, ll right, ll& swapCount)
+    //  - Step 1: Set pivot = nums[right] and boundary i = left - 1.
+    //  - Step 2: Iterate j from left to right - 1. If nums[j] <= pivot:
+    //      * Increment i.
+    //      * Call effectiveSwap(nums, i, j, swapCount).
+    //  - Step 3: Place pivot into its final position: effectiveSwap(nums, i + 1, right, swapCount).
+    //  - Step 4: Return pivot position (i + 1).
+
+    // TODO: Implement the private recursive method 'quickSelect':
+    //  - Signature: ll quickSelect(vector<ll>& nums, ll left, ll right, ll targetIndex, ll& swapCount)
+    //  - Base case: if left > right, return -1.
+    //  - Step 1: Find pivotIndex = partitionLomuto(nums, left, right, swapCount).
+    //  - Step 2: If pivotIndex == targetIndex, return nums[pivotIndex].
+    //  - Step 3: If targetIndex < pivotIndex, prune right half: recurse on [left..pivotIndex - 1].
+    //  - Step 4: Otherwise, prune left half: recurse on [pivotIndex + 1..right].
+
 public:
     // Finds the K-th largest element using Lomuto partitioning and counts effective swaps (i != j)
     QuickselectResult findKthLargest(vector<ll> nums, ll k) {
         ll swapCount = 0;
         ll kthVal = -1;
 
-        // TODO: Map the K-th largest element to ascending target index: (N - k)
-        // TODO: Implement Lomuto partitioning choosing nums[right] as the pivot
-        // TODO: Count only effective swaps between distinct indices (i != j)
-        // TODO: Implement recursive or iterative Quickselect to prune irrelevant partitions
-        // TODO: Return QuickselectResult with kthVal, finalState, and swapCount
+        // TODO: Validate that nums is not empty and k is in valid range [1..nums.size()]
+        // TODO: Compute target ascending index: targetIndex = (ll)nums.size() - k
+        // TODO: Call quickSelect(nums, 0, (ll)nums.size() - 1, targetIndex, swapCount) and assign to kthVal
 
         return {kthVal, nums, swapCount};
     }
@@ -71,10 +95,10 @@ void runTest(Solution& solver, int testNum, const string& testName,
 
     cout << "\nTest " << testNum << " Results (" << testName << "):\n";
     cout << "Input:          "; printVector(input); cout << " | K = " << k << "\n";
-    cout << "Expected Val:   " << expected.kthElement << " | Output Val:   " << output.kthElement << "\n";
+    cout << "Expected Val:   "; cout << expected.kthElement << " | Output Val:   " << output.kthElement << "\n";
     cout << "Expected State: "; printVector(expected.finalState); cout << "\n";
     cout << "Output State:   "; printVector(output.finalState); cout << "\n";
-    cout << "Expected Swaps: " << expected.swapCount << " | Output Swaps: " << output.swapCount << "\n";
+    cout << "Expected Swaps: "; cout << expected.swapCount << " | Output Swaps: " << output.swapCount << "\n";
     cout << "Status:         " << (passed ? "Passed" : "Failed") << "\n";
 }
 

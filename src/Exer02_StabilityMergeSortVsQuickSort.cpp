@@ -36,15 +36,52 @@ struct StabilityResult {
 };
 
 class Solution {
+private:
+    // TODO: Implement the private helper method 'merge':
+    //  - Signature: void merge(vector<string>& words, vector<string>& helper, ll left, ll middle, ll right)
+    //  - Step 1: Copy elements from range [left..right] of 'words' into 'helper'.
+    //  - Step 2: Set pointers i = left, j = middle + 1, k = left.
+    //  - Step 3: While i <= middle and j <= right:
+    //      * Compare string lengths: if helper[i].length() >= helper[j].length(), assign helper[i++] to words[k++].
+    //        (Crucial: '>=' guarantees stability by prioritizing the leftmost original occurrence on tie).
+    //      * Otherwise, assign helper[j++] to words[k++].
+    //  - Step 4: Copy any remaining elements from the left subarray (while i <= middle).
+
+    // TODO: Implement the private recursive method 'mergeSort':
+    //  - Signature: void mergeSort(vector<string>& words, vector<string>& helper, ll left, ll right)
+    //  - Base case: if left >= right, return.
+    //  - Step 1: Calculate midpoint: middle = left + (right - left) / 2.
+    //  - Step 2: Recursively call mergeSort on left half [left..middle].
+    //  - Step 3: Recursively call mergeSort on right half [middle + 1..right].
+    //  - Step 4: Merge both halves with merge(words, helper, left, middle, right).
+
+    // TODO: Implement the private helper method 'partitionHoareDesc':
+    //  - Signature: ll partitionHoareDesc(vector<string>& words, ll left, ll right)
+    //  - Step 1: Choose the left element length as pivot: size_t pivotLen = words[left].length().
+    //  - Step 2: Initialize convergent pointers: i = left - 1, j = right + 1.
+    //  - Step 3: Loop infinitely:
+    //      * Increment i while words[i].length() > pivotLen.
+    //      * Decrement j while words[j].length() < pivotLen.
+    //      * If i >= j, return boundary index j.
+    //      * Otherwise, swap words[i] and words[j].
+
+    // TODO: Implement the private recursive method 'quickSort':
+    //  - Signature: void quickSort(vector<string>& words, ll left, ll right)
+    //  - Base case: if left >= right, return.
+    //  - Step 1: Partition using partitionHoareDesc to find splitIndex.
+    //  - Step 2: Recursively sort left partition [left..splitIndex].
+    //  - Step 3: Recursively sort right partition [splitIndex + 1..right].
+
 public:
     // Compares sorting stability between Merge Sort and Quick Sort
     StabilityResult compareStability(const vector<string>& inputWords) {
         vector<string> mergeWords = inputWords;
         vector<string> quickWords = inputWords;
 
-        // TODO: Implement stable Merge Sort (prioritizing left partition on tie with '>=')
-        // TODO: Implement unstable Quick Sort (using Lomuto/Hoare partitioning to demonstrate instability)
-        // TODO: Return StabilityResult containing both sorted vectors
+        // TODO: If inputWords is not empty:
+        //  - Allocate helper vector: vector<string> helper(mergeWords.size())
+        //  - Execute stable mergeSort on mergeWords: mergeSort(mergeWords, helper, 0, (ll)mergeWords.size() - 1)
+        //  - Execute unstable quickSort on quickWords: quickSort(quickWords, 0, (ll)quickWords.size() - 1)
 
         return {mergeWords, quickWords};
     }

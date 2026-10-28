@@ -14,6 +14,7 @@
 
 #include <iostream>
 #include <vector>
+#include <string>
 
 using namespace std;
 
@@ -32,14 +33,36 @@ struct InversionResult {
 };
 
 class Solution {
+private:
+    // TODO: Implement the private helper method 'merge':
+    //  - Signature: ll merge(vector<ll>& nums, vector<ll>& helper, ll left, ll middle, ll right)
+    //  - Step 1: Copy the range [left..right] from 'nums' to 'helper'.
+    //  - Step 2: Set pointers i = left, j = middle + 1, k = left, and inv_count = 0.
+    //  - Step 3: While i <= middle and j <= right:
+    //      * If helper[i] <= helper[j], copy helper[i++] to nums[k++].
+    //      * Otherwise, copy helper[j++] to nums[k++] and increment inv_count by (middle - i + 1).
+    //  - Step 4: Copy any remaining elements from the left subarray (while i <= middle).
+    //  - Step 5: Return inv_count.
+
+    // TODO: Implement the private recursive method 'mergeSort':
+    //  - Signature: ll mergeSort(vector<ll>& nums, vector<ll>& helper, ll left, ll right)
+    //  - Base case: If left >= right, return 0.
+    //  - Step 1: Calculate midpoint: middle = left + (right - left) / 2.
+    //  - Step 2: Recursively sort left half and accumulate inversions.
+    //  - Step 3: Recursively sort right half and accumulate inversions.
+    //  - Step 4: Merge both halves using 'merge' and accumulate cross-inversions.
+    //  - Step 5: Return total inversions.
+
 public:
     // Public entry point wrapper matching classroom style
     InversionResult countInversions(vector<ll> nums) {
-        // TODO: Implement mergeSort and merge functions adapting Merge Sort
-        // TODO: Count inversions when helper[i] > helper[j] via (middle - i + 1)
-        // TODO: Return InversionResult containing the total inversion count and sorted vector
+        ll totalInversions = 0;
 
-        return {0, nums};
+        // TODO: Allocate a helper buffer vector of the same size as nums: vector<ll> helper(nums.size())
+        // TODO: If nums is not empty, invoke mergeSort(nums, helper, 0, (ll)nums.size() - 1)
+        // TODO: Store the returned value in totalInversions
+
+        return {totalInversions, nums};
     }
 };
 

@@ -36,13 +36,56 @@ struct ParitySortResult {
 };
 
 class Solution {
+private:
+    // TODO: Implement the private helper method 'manualSwap':
+    //  - Signature: void manualSwap(ll& a, ll& b)
+    //  - Swap values of a and b using a temporary variable.
+
+    // TODO: Implement the private helper method 'hoareParityPartition':
+    //  - Signature: ll hoareParityPartition(vector<ll>& nums, ll left, ll right)
+    //  - Step 1: Initialize two pointers: i = left, j = right.
+    //  - Step 2: Loop while i <= j:
+    //      * Increment i while i <= right and nums[i] is even (nums[i] % 2 == 0).
+    //      * Decrement j while j >= left and nums[j] is odd (nums[j] % 2 != 0).
+    //      * If i < j, manualSwap(nums[i], nums[j]), increment i, and decrement j.
+    //      * Otherwise, break the loop.
+    //  - Step 3: Return j (the boundary index of the even partition).
+
+    // TODO: Implement the private helper method 'partitionAscending':
+    //  - Signature: ll partitionAscending(vector<ll>& nums, ll left, ll right)
+    //  - Lomuto partition scheme for ascending order:
+    //      * Set pivot = nums[right] and boundary i = left - 1.
+    //      * For j from left to right - 1: if nums[j] <= pivot, increment i and manualSwap(nums[i], nums[j]).
+    //      * Place pivot: manualSwap(nums[i + 1], nums[right]).
+    //      * Return i + 1.
+
+    // TODO: Implement the private recursive method 'quickSortAscending':
+    //  - Signature: void quickSortAscending(vector<ll>& nums, ll left, ll right)
+    //  - If left < right, partition using partitionAscending, then recurse on [left..pivot - 1] and [pivot + 1..right].
+
+    // TODO: Implement the private helper method 'partitionDescending':
+    //  - Signature: ll partitionDescending(vector<ll>& nums, ll left, ll right)
+    //  - Lomuto partition scheme for descending order:
+    //      * Set pivot = nums[right] and boundary i = left - 1.
+    //      * For j from left to right - 1: if nums[j] >= pivot, increment i and manualSwap(nums[i], nums[j]).
+    //      * Place pivot: manualSwap(nums[i + 1], nums[right]).
+    //      * Return i + 1.
+
+    // TODO: Implement the private recursive method 'quickSortDescending':
+    //  - Signature: void quickSortDescending(vector<ll>& nums, ll left, ll right)
+    //  - If left < right, partition using partitionDescending, then recurse on [left..pivot - 1] and [pivot + 1..right].
+
 public:
     // Segregates evens and odds via Hoare partitioning, then sorts evens (asc) and odds (desc)
     ParitySortResult sortParity(vector<ll> nums) {
-        // TODO: Step 1 - Segregate evens (left) and odds (right) using Hoare bidirectional partition
-        // TODO: Step 2 - Sort the even partition in ascending order using QuickSort
-        // TODO: Step 3 - Sort the odd partition in descending order using QuickSort
-        // TODO: Return ParitySortResult containing the resulting segregated and sorted array
+        if (nums.empty()) {
+            return {nums};
+        }
+
+        // TODO: Define boundaries: left = 0, right = (ll)nums.size() - 1
+        // TODO: Step 1 - Segregate evens and odds: ll splitIndex = hoareParityPartition(nums, left, right)
+        // TODO: Step 2 - Sort evens in ascending order: if splitIndex >= left, call quickSortAscending(nums, left, splitIndex)
+        // TODO: Step 3 - Sort odds in descending order: if splitIndex + 1 <= right, call quickSortDescending(nums, splitIndex + 1, right)
 
         return {nums};
     }
