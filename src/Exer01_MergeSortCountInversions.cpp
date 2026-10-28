@@ -32,62 +32,14 @@ struct InversionResult {
 };
 
 class Solution {
-private:
-    // Merges two sorted subarrays back into the main vector and counts split inversions
-    ll merge(vector<ll>& nums, vector<ll>& helper, ll left, ll middle, ll right) {
-        // Copy the current range into the helper vector
-        for (ll m = left; m <= right; m++) {
-            helper[m] = nums[m];
-        }
-
-        ll i = left;          // Pointer for the left subarray
-        ll j = middle + 1;    // Pointer for the right subarray
-        ll k = left;          // Pointer for the main vector
-        ll inv_count = 0;
-
-        // Compare elements from both halves and place the smallest into nums
-        while (i <= middle && j <= right) {
-            if (helper[i] <= helper[j]) {
-                nums[k++] = helper[i++];
-            } else {
-                nums[k++] = helper[j++];
-                inv_count += (middle - i + 1); // Key step: counts split inversions
-            }
-        }
-
-        // Copy any remaining elements from the left subarray (if any)
-        while (i <= middle) {
-            nums[k++] = helper[i++];
-        }
-
-        return inv_count;
-    }
-
-    // Recursive helper function for Divide and Conquer sorting
-    ll mergeSort(vector<ll>& nums, vector<ll>& helper, ll left, ll right) {
-        ll inv_count = 0;
-        // Base case: if the range has more than one element
-        if (left < right) {
-            ll middle = left + (right - left) / 2; // Find the midpoint
-
-            inv_count += mergeSort(nums, helper, left, middle);        // Inversions in the left half
-            inv_count += mergeSort(nums, helper, middle + 1, right);   // Inversions in the right half
-            inv_count += merge(nums, helper, left, middle, right);     // Inversions during the merge step
-        }
-        return inv_count;
-    }
-
 public:
     // Public entry point wrapper matching classroom style
     InversionResult countInversions(vector<ll> nums) {
-        vector<ll> helper(nums.size()); // Allocate a single helper vector to avoid overhead
-        ll totalInversions = 0;
+        // TODO: Implement mergeSort and merge functions adapting Merge Sort
+        // TODO: Count inversions when helper[i] > helper[j] via (middle - i + 1)
+        // TODO: Return InversionResult containing the total inversion count and sorted vector
 
-        if (!nums.empty()) {
-            totalInversions = mergeSort(nums, helper, 0, (ll)nums.size() - 1);
-        }
-
-        return {totalInversions, nums};
+        return {0, nums};
     }
 };
 

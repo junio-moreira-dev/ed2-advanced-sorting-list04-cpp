@@ -36,109 +36,13 @@ struct ParitySortResult {
 };
 
 class Solution {
-private:
-    // Helper to perform manual swap
-    void manualSwap(ll& a, ll& b) {
-        ll temp = a;
-        a = b;
-        b = temp;
-    }
-
-    // Hoare bidirectional partition scheme for parity segregation
-    ll hoareParityPartition(vector<ll>& nums, ll left, ll right) {
-        ll i = left;
-        ll j = right;
-
-        while (i <= j) {
-            // Advance pointer while element is even
-            while (i <= right && nums[i] % 2 == 0) {
-                i++;
-            }
-            // Retreat pointer while element is odd
-            while (j >= left && nums[j] % 2 != 0) {
-                j--;
-            }
-
-            if (i < j) {
-                manualSwap(nums[i], nums[j]);
-                i++;
-                j--;
-            } else {
-                break;
-            }
-        }
-
-        // j is the rightmost index of the even partition
-        return j;
-    }
-
-    // Lomuto partitioning for ascending order (even numbers)
-    ll partitionAscending(vector<ll>& nums, ll left, ll right) {
-        ll pivot = nums[right];
-        ll i = left - 1;
-
-        for (ll j = left; j < right; j++) {
-            if (nums[j] <= pivot) {
-                i++;
-                manualSwap(nums[i], nums[j]);
-            }
-        }
-        manualSwap(nums[i + 1], nums[right]);
-        return i + 1;
-    }
-
-    void quickSortAscending(vector<ll>& nums, ll left, ll right) {
-        if (left < right) {
-            ll pivotIndex = partitionAscending(nums, left, right);
-            quickSortAscending(nums, left, pivotIndex - 1);
-            quickSortAscending(nums, pivotIndex + 1, right);
-        }
-    }
-
-    // Lomuto partitioning for descending order (odd numbers)
-    ll partitionDescending(vector<ll>& nums, ll left, ll right) {
-        ll pivot = nums[right];
-        ll i = left - 1;
-
-        for (ll j = left; j < right; j++) {
-            if (nums[j] >= pivot) {
-                i++;
-                manualSwap(nums[i], nums[j]);
-            }
-        }
-        manualSwap(nums[i + 1], nums[right]);
-        return i + 1;
-    }
-
-    void quickSortDescending(vector<ll>& nums, ll left, ll right) {
-        if (left < right) {
-            ll pivotIndex = partitionDescending(nums, left, right);
-            quickSortDescending(nums, left, pivotIndex - 1);
-            quickSortDescending(nums, pivotIndex + 1, right);
-        }
-    }
-
 public:
+    // Segregates evens and odds via Hoare partitioning, then sorts evens (asc) and odds (desc)
     ParitySortResult sortParity(vector<ll> nums) {
-        if (nums.empty()) {
-            return {nums};
-        }
-
-        ll left = 0;
-        ll right = (ll)nums.size() - 1;
-
-        // Step 1: Segregate even and odd numbers using Hoare partition
-        ll splitIndex = hoareParityPartition(nums, left, right);
-
-        // Step 2: Sort the even partition [left..splitIndex] in ascending order
-        if (splitIndex >= left) {
-            quickSortAscending(nums, left, splitIndex);
-        }
-
-        // Step 3: Sort the odd partition [splitIndex + 1..right] in descending order
-        if (splitIndex + 1 <= right) {
-            quickSortDescending(nums, splitIndex + 1, right);
-        }
+        // TODO: Step 1 - Segregate evens (left) and odds (right) using Hoare bidirectional partition
+        // TODO: Step 2 - Sort the even partition in ascending order using QuickSort
+        // TODO: Step 3 - Sort the odd partition in descending order using QuickSort
+        // TODO: Return ParitySortResult containing the resulting segregated and sorted array
 
         return {nums};
     }

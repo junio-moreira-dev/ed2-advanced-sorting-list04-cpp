@@ -36,82 +36,15 @@ struct StabilityResult {
 };
 
 class Solution {
-private:
-    // Merges two sorted subarrays preserving stability (>= prioritizes left elements)
-    void merge(vector<string>& words, vector<string>& helper, ll left, ll middle, ll right) {
-        for (ll m = left; m <= right; m++) {
-            helper[m] = words[m];
-        }
-
-        ll i = left;          // Left subarray pointer
-        ll j = middle + 1;    // Right subarray pointer
-        ll k = left;          // Destination pointer
-
-        while (i <= middle && j <= right) {
-            // '>= ensures stability: on a length tie, choose the element that appeared first (left partition)
-            if (helper[i].length() >= helper[j].length()) {
-                words[k++] = helper[i++];
-            } else {
-                words[k++] = helper[j++];
-            }
-        }
-
-        // Copy remaining elements from the left subarray (if any)
-        while (i <= middle) {
-            words[k++] = helper[i++];
-        }
-    }
-
-    void mergeSort(vector<string>& words, vector<string>& helper, ll left, ll right) {
-        if (left < right) {
-            ll middle = left + (right - left) / 2;
-            mergeSort(words, helper, left, middle);
-            mergeSort(words, helper, middle + 1, right);
-            merge(words, helper, left, middle, right);
-        }
-    }
-
-    // Hoare partitioning for descending order using left element as pivot
-    ll partitionHoareDesc(vector<string>& words, ll left, ll right) {
-        size_t pivotLen = words[left].length();
-        ll i = left - 1;
-        ll j = right + 1;
-
-        while (true) {
-            do {
-                i++;
-            } while (words[i].length() > pivotLen);
-
-            do {
-                j--;
-            } while (words[j].length() < pivotLen);
-
-            if (i >= j) {
-                return j;
-            }
-
-            swap(words[i], words[j]);
-        }
-    }
-
-    void quickSort(vector<string>& words, ll left, ll right) {
-        if (left < right) {
-            ll splitIndex = partitionHoareDesc(words, left, right);
-            quickSort(words, left, splitIndex);
-            quickSort(words, splitIndex + 1, right);
-        }
-    }
-
 public:
+    // Compares sorting stability between Merge Sort and Quick Sort
     StabilityResult compareStability(const vector<string>& inputWords) {
         vector<string> mergeWords = inputWords;
         vector<string> quickWords = inputWords;
 
-        if (!inputWords.empty()) {
-            vector<string> helper(mergeWords.size());
-            mergeSort(mergeWords, helper, 0, (ll)mergeWords.size() - 1);
-            quickSort(quickWords, 0, (ll)quickWords.size() - 1);
-        }
+        // TODO: Implement stable Merge Sort (prioritizing left partition on tie with '>=')
+        // TODO: Implement unstable Quick Sort (using Lomuto/Hoare partitioning to demonstrate instability)
+        // TODO: Return StabilityResult containing both sorted vectors
 
         return {mergeWords, quickWords};
     }

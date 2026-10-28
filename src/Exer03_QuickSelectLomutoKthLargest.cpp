@@ -37,64 +37,17 @@ struct QuickselectResult {
 };
 
 class Solution {
-private:
-    // Explicit manual swap using pass-by-reference and a temporary variable
-    void manualSwap(ll& a, ll& b) {
-        ll temp = a;
-        a = b;
-        b = temp;
-    }
-
-    // Helper to perform and count only effective swaps (i != j)
-    void effectiveSwap(vector<ll>& nums, ll i, ll j, ll& swapCount) {
-        if (i != j) {
-            manualSwap(nums[i], nums[j]);
-            swapCount++;
-        }
-    }
-
-    // Classroom Lomuto scheme: i starts at left - 1, increments before swap
-    ll partitionLomuto(vector<ll>& nums, ll left, ll right, ll& swapCount) {
-        ll pivot = nums[right];
-        ll i = left - 1; // Boundary of elements <= pivot
-
-        for (ll j = left; j < right; j++) {
-            if (nums[j] <= pivot) {
-                i++;
-                effectiveSwap(nums, i, j, swapCount);
-            }
-        }
-
-        // Place the pivot in its final, definite position
-        effectiveSwap(nums, i + 1, right, swapCount);
-        return i + 1;
-    }
-
-    // Recursive Quickselect pruning unneeded search partitions
-    ll quickSelect(vector<ll>& nums, ll left, ll right, ll targetIndex, ll& swapCount) {
-        if (left <= right) {
-            ll pivotIndex = partitionLomuto(nums, left, right, swapCount);
-
-            if (pivotIndex == targetIndex) {
-                return nums[pivotIndex];
-            } else if (targetIndex < pivotIndex) {
-                return quickSelect(nums, left, pivotIndex - 1, targetIndex, swapCount); // Prune right side
-            } else {
-                return quickSelect(nums, pivotIndex + 1, right, targetIndex, swapCount); // Prune left side
-            }
-        }
-        return -1;
-    }
-
 public:
+    // Finds the K-th largest element using Lomuto partitioning and counts effective swaps (i != j)
     QuickselectResult findKthLargest(vector<ll> nums, ll k) {
         ll swapCount = 0;
         ll kthVal = -1;
 
-        if (!nums.empty() && k >= 1 && k <= (ll)nums.size()) {
-            ll targetIndex = (ll)nums.size() - k; // Ascending target index
-            kthVal = quickSelect(nums, 0, (ll)nums.size() - 1, targetIndex, swapCount);
-        }
+        // TODO: Map the K-th largest element to ascending target index: (N - k)
+        // TODO: Implement Lomuto partitioning choosing nums[right] as the pivot
+        // TODO: Count only effective swaps between distinct indices (i != j)
+        // TODO: Implement recursive or iterative Quickselect to prune irrelevant partitions
+        // TODO: Return QuickselectResult with kthVal, finalState, and swapCount
 
         return {kthVal, nums, swapCount};
     }
